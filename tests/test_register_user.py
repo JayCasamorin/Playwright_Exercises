@@ -1,56 +1,59 @@
-from playwright.sync_api import Page, expect
-
-hompage_url = "https://automationexercise.com/"
+# test_register_user.py
+from playwright.sync_api import Page
+from pages.home_page import HomePage
+from pages.signup_login_page import SignupLoginPage
+from pages.account_info_page import AccountInformationPage
+from pages.account_status_page import AccountStatusPage
 
 
 def test_register_user(page: Page):
-    # Navigate to the registration page
-    page.goto(hompage_url)
-    expect(page).to_have_title("Automation Exercise")
+    # Initialize Page Objects
+    home_page = HomePage(page)
+    signup_login_page = SignupLoginPage(page)
+    account_info_page = AccountInformationPage(page)
+    status_page = AccountStatusPage(page)
 
-    page.locator("a[href='/login']").click()
-    expect(page).to_have_url("https://automationexercise.com/login")
-    expect(
-        page.get_by_role(
-            "heading",
-            name="New User Signup!"
-        )
+    # 1. Navigate to Home & click Signup/Login
+    home_page.navigate("https://automationexercise.com/")
+    home_page.click_signup_login()
+
+    # 2. Complete initial Signup
+    signup_login_page.verify_on_signup_page()
+    signup_login_page.signup("Jay Casamorin", "jay.casamorin@gmail.com")
+
+    # 3. Complete Form Details
+    account_info_page.verify_page_loaded()
+    account_info_page.fill_account_details(
+        password="jaycasamorin",
+        day="17",
+        month="12",
+        year="1999"
     )
+    account_info_page.select_checkboxes(newsletter=True, special_offers=True)
+    
+    address_details = {
+        "first_name": "Jay",
+        "last_name": "Casamorin",
+        "company": "Example Company",
+        "address": "123 Main St",
+        "address2": "Apt 4B",
+        "country": "Canada",
+        "state": "Ontario",
+        "city": "Toronto",
+        "zipcode": "M5H 2N2",
+        "mobile_number": "+1 416-555-1234"
+    }
+    account_info_page.fill_address_information(address_details)
+    account_info_page.submit_account_creation()
 
-    page.locator("input[data-qa='signup-name']").fill("Jay Casamorin")
-    page.locator("input[data-qa='signup-email']").fill("jay.casamorin@gmail.com")
-    page.locator("button[data-qa='signup-button']").click()
+    # 4. Verify Account Creation
+    status_page.verify_heading("Account Created!")
+    status_page.click_continue()
 
-    expect(page.get_by_role("heading", name="Enter Account Information")).to_be_visible()
+    # 5. Verify Login Status & Delete Account
+    home_page.verify_logged_in_as("Jay Casamorin")
+    home_page.click_delete_account()
 
-    page.get_by_role("radio", name="Mr.").check()
-    page.locator("input[data-qa='password']").fill("jaycasamorin")
-
-    page.locator("select[data-qa='days']").select_option("17")
-    page.locator("select[data-qa='months']").select_option("12")
-    page.locator("select[data-qa='years']").select_option("1999")
-
-    page.get_by_role("checkbox", name="Sign up for our newsletter!").check()
-    page.get_by_role("checkbox", name="Receive special offers from our partners!").check()
-
-    page.locator("input[data-qa='first_name']").fill("Jay")
-    page.locator("input[data-qa='last_name']").fill("Casamorin")
-    page.locator("input[data-qa='company']").fill("Example Company")
-    page.locator("input[data-qa='address']").fill("123 Main St")
-    page.locator("input[data-qa='address2']").fill("Apt 4B")
-
-    page.get_by_role("combobox", name="Country").select_option("Canada")
-    page.locator("input[data-qa='state']").fill("Ontario")
-    page.locator("input[data-qa='city']").fill("Toronto")
-    page.locator("input[data-qa='zipcode']").fill("M5H 2N2")
-    page.locator("input[data-qa='mobile_number']").fill("+1 416-555-1234")
-    page.locator("button[data-qa='create-account']").click()
-
-    expect(page.get_by_role("heading", name="Account Created!")).to_be_visible()
-    page.locator("a[data-qa='continue-button']").click()
-
-    expect(page.get_by_role("listitem").filter(has_text="Logged in as Jay Casamorin")).to_be_visible()
-    page.locator("a[href='/delete_account']").click()
-
-    expect(page.get_by_role("heading", name="Account Deleted!")).to_be_visible()
-    page.locator("a[data-qa='continue-button']").click()
+    # 6. Verify Account Deletion
+    status_page.verify_heading("Account Deleted!")
+    status_page.click_continue()
