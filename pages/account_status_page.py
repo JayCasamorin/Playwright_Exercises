@@ -1,13 +1,13 @@
 # pages/account_status_page.py
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 class AccountStatusPage:
     def __init__(self, page: Page):
         self.page = page
-        self.continue_button = page.locator("a[data-qa='continue-button']")
 
-    def verify_heading(self, heading_text: str):
-        expect(self.page.get_by_role("heading", name=heading_text)).to_be_visible()
+        # Locators
+        self.account_created_heading = page.get_by_role("heading", name="Account Created!")
+        self.account_created_continue_button = page.get_by_test_id("continue-button")
 
     def click_continue(self):
-        self.continue_button.click()
+        self.account_created_continue_button.click()
