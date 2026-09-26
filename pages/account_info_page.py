@@ -1,5 +1,5 @@
 # pages/account_info_page.py
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect # pyright: ignore[reportMissingImports]
 
 class AccountInformationPage:
     def __init__(self, page: Page):
@@ -18,7 +18,11 @@ class AccountInformationPage:
         self.years_select = page.get_by_test_id("years")
         
         self.newsletter_checkbox = page.get_by_role("checkbox", name="Sign up for our newsletter!")
+<<<<<<< HEAD
         self.special_offers_checkbox = page.get_by_role("checkbox", name="Receive special offers from our partners!")
+=======
+        self.option_checkbox = page.get_by_role("checkbox", name="Receive special offers from our partners!")
+>>>>>>> dc28187 (Minor changes)
 
         self.first_name_input = page.get_by_role("textbox", name="First Name")
         self.last_name_input = page.get_by_role("textbox", name="Last Name")
@@ -54,7 +58,11 @@ class AccountInformationPage:
         if newsletter:
             self.newsletter_checkbox.check()
         if special_offers:
+<<<<<<< HEAD
             self.special_offers_checkbox.check()
+=======
+            self.option_checkbox.check()
+>>>>>>> dc28187 (Minor changes)
 
     def enter_name(self, first_name: str, last_name: str):
         self.first_name_input.fill(first_name)
