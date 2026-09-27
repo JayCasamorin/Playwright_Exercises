@@ -16,15 +16,15 @@ def test_register_user(homepage: HomePage):
     # Click on 'Signup / Login' button
     homepage.click_signup_login()
     signup_login_page = SignupLoginPage(homepage.page)
-
+    
     # Verify 'New User Signup!' is visible
     expect(
         signup_login_page.signup_heading
     ).to_be_visible()
 
     # Enter name and email address
-    signup_login_page.enter_name("Jay Casamorin")
-    signup_login_page.enter_email("jay.casamorin@gmail.com")
+    signup_login_page.signup_name_input.fill("Jay Casamorin")
+    signup_login_page.signup_email_input.fill("jay.casamorin@gmail.com")
 
     # Click 'Signup' button
     signup_login_page.click_signup_button()
