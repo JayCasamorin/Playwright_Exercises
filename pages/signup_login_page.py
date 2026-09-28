@@ -5,7 +5,7 @@ class SignupLoginPage:
         self.page = page
 
         # Locators
-
+        self.login_heading = page.get_by_role("heading", name="Login to your account")
         self.signup_heading = page.get_by_role("heading", name="New User Signup!")
         
         self.login_email_input = page.get_by_test_id("login-email")

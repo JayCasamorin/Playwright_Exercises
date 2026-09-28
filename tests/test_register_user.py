@@ -8,6 +8,8 @@ from pages.delete_account_page import DeleteAccountPage
 
 
 def test_register_user(homepage: HomePage):
+    user_name = "Jay Casamorin"
+    
     # Verify that home page is visible successfully
     expect(
         homepage.home_header
@@ -23,7 +25,7 @@ def test_register_user(homepage: HomePage):
     ).to_be_visible()
 
     # Enter name and email address
-    signup_login_page.signup_name_input.fill("Jay Casamorin")
+    signup_login_page.signup_name_input.fill(user_name)
     signup_login_page.signup_email_input.fill("jay.casamorin@gmail.com")
 
     # Click 'Signup' button
@@ -69,7 +71,7 @@ def test_register_user(homepage: HomePage):
     # Verify that 'Logged in as username' is visible
     expect(
         homepage.logged_in_as_user
-    ).to_be_visible()
+    ).to_have_text(f"Logged in as {user_name}")
 
     # Click 'Delete Account' button
     expect(
