@@ -9,7 +9,9 @@ class HomePage:
         self.home_header = page.get_by_alt_text("Website for automation practice")
         self.signup_login_link = page.get_by_role("link", name="Signup / Login")
         self.logged_in_as_user = page.get_by_role('listitem').filter(has_text=f"Logged in as")
-        self.delete_account_link = page.get_by_role("listitem").filter(has_text="Delete Account")
+        self.delete_account_link = page.get_by_role("link",name="Delete Account")
+        self.logout_button = page.get_by_role("link", name="Logout")
+
 
     def open(self):
         self.page.goto(URL)
@@ -19,3 +21,6 @@ class HomePage:
 
     def click_delete_account(self):
         self.delete_account_link.click()
+
+    def click_logout(self):
+        self.logout_button.click()
