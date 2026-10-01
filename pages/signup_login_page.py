@@ -16,7 +16,7 @@ class SignupLoginPage:
         self.signup_name_input = page.get_by_test_id("signup-name")
         self.signup_email_input = page.get_by_test_id("signup-email")
         self.signup_button = page.get_by_test_id("signup-button")
-
+        self.existing_email_error = page.get_by_text("Email Address already exist!")
 
     def enter_login_email(self, email: str):
         self.login_email_input.fill(email)

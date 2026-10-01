@@ -4,6 +4,8 @@ from pages.signup_login_page import SignupLoginPage
 
 def test_logout_user(homepage: HomePage):
     user_name = "Jay Casamorin"
+    user_email = "casamorin.jay@gmail.com"
+    user_password = "SecurePassword123"
 
     # Verify that home page is visible successfully
     expect(
@@ -20,7 +22,7 @@ def test_logout_user(homepage: HomePage):
     ).to_be_visible()
 
     # Enter correct email address and password
-    signup_login_page.login("casamorin.jay@gmail.com", "SecurePassword123")
+    signup_login_page.login(user_email, user_password)
 
     # Verify that 'Logged in as username' is visible
     expect(

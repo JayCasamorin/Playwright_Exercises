@@ -3,7 +3,10 @@ from pages.home_page import HomePage
 from pages.signup_login_page import SignupLoginPage
 
 def test_login_user_successful(homepage: HomePage):
+    # Load Data
     user_name = "Jay Casamorin"
+    user_email = "casamorin.jay@gmail.com"
+    user_password = "SecurePassword123"
     
     # Verify that home page is visible successfully
     expect(
@@ -20,8 +23,8 @@ def test_login_user_successful(homepage: HomePage):
     ).to_be_visible()
 
     # Enter correct email address and password
-    signup_login_page.login_email_input.fill("casamorin.jay@gmail.com")
-    signup_login_page.login_password_input.fill("SecurePassword123")
+    signup_login_page.login_email_input.fill(user_email)
+    signup_login_page.login_password_input.fill(user_password)
 
     # Click 'login' button
     signup_login_page.login_button.click()
@@ -32,6 +35,10 @@ def test_login_user_successful(homepage: HomePage):
     ).to_have_text(f"Logged in as {user_name}")
 
 def test_login_user_incorrect_credentials(homepage: HomePage):
+    # Load Data
+    user_email = "incorrect_email@example.com"
+    user_password = "wrong_password"
+
     # Verify that home page is visible successfully
     expect(
         homepage.home_header
@@ -43,12 +50,12 @@ def test_login_user_incorrect_credentials(homepage: HomePage):
 
     # Verify 'Login to your account' is visible
     expect(
-        signup_login_page.signup_heading
+        signup_login_page.login_heading
     ).to_be_visible()
 
     # Enter incorrect email address and password
-    signup_login_page.login_email_input.fill("incorrect_email@example.com")
-    signup_login_page.login_password_input.fill("wrong_password")
+    signup_login_page.login_email_input.fill(user_email)
+    signup_login_page.login_password_input.fill(user_password)
 
 
     # Click 'login' button
