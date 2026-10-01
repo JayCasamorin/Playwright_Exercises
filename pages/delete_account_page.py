@@ -1,8 +1,9 @@
 from playwright.sync_api import Page
+from pages.base_page import BasePage
 
-class DeleteAccountPage:
+class DeleteAccountPage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
 
         # Locators
         self.delete_account_heading = page.get_by_role("heading", name="Account Deleted!")

@@ -1,9 +1,10 @@
 # pages/account_status_page.py
 from playwright.sync_api import Page
+from pages.base_page import BasePage
 
-class AccountStatusPage:
+class AccountStatusPage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
 
         # Locators
         self.account_created_heading = page.get_by_role("heading", name="Account Created!")

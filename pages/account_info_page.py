@@ -1,9 +1,10 @@
 # pages/account_info_page.py
 from playwright.sync_api import Page, expect # pyright: ignore[reportMissingImports]
+from pages.base_page import BasePage
 
-class AccountInformationPage:
+class AccountInformationPage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
 
         # Locators
 

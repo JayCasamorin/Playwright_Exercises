@@ -1,8 +1,9 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.signup_login_page import SignupLoginPage
 
 def test_logout_user(homepage: HomePage):
+    # Load Data
     user_name = "Jay Casamorin"
     user_email = "casamorin.jay@gmail.com"
     user_password = "SecurePassword123"

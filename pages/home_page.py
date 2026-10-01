@@ -1,13 +1,13 @@
 from playwright.sync_api import Page, expect
+from pages.base_page import BasePage
 
 URL = "https://automationexercise.com/"
-class HomePage:
+class HomePage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
 
-        # Locators
+        # Locators (signup_login_link / contact_us_link inherited from BasePage)
         self.home_header = page.get_by_alt_text("Website for automation practice")
-        self.signup_login_link = page.get_by_role("link", name="Signup / Login")
         self.logged_in_as_user = page.get_by_role('listitem').filter(has_text=f"Logged in as")
         self.delete_account_link = page.get_by_role("link",name="Delete Account")
         self.logout_button = page.get_by_role("link", name="Logout")
@@ -24,3 +24,6 @@ class HomePage:
 
     def click_logout(self):
         self.logout_button.click()
+
+    def click_contact_us(self):
+        self.contact_us_link.click()
