@@ -27,3 +27,6 @@ class HomePage(BasePage):
 
     def click_contact_us(self):
         self.contact_us_link.click()
+        # Page JS (confirm-dialog submit handler) attaches after load; without this,
+        # headless can submit before the handler is ready and the form does a plain reload.
+        self.page.wait_for_load_state("networkidle")
