@@ -15,7 +15,7 @@ def test_contact_us_form_submission(homepage: HomePage):
 
     # Verify that home page is visible successfully
     expect(
-        homepage.home_header
+        homepage.home_heading
     ).to_be_visible()
 
     # Navigate to 'Contact Us' page
@@ -44,7 +44,7 @@ def test_contact_us_form_submission(homepage: HomePage):
     # Click 'Home' button and verify that landed to home page successfully
     contact_us_page.click_home_button()
     expect(
-        homepage.home_header
+        homepage.home_heading
     ).to_be_visible()
 
 

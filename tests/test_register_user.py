@@ -24,7 +24,7 @@ def test_register_user(homepage: HomePage):
     
     # Verify that home page is visible successfully
     expect(
-        homepage.home_header
+        homepage.home_heading
     ).to_be_visible()
 
     # Click on 'Signup / Login' button
@@ -105,7 +105,7 @@ def test_register_user_existing_email(homepage: HomePage):
 
     # Verify that home page is visible successfully
     expect(
-        homepage.home_header
+        homepage.home_heading
     ).to_be_visible()
 
     # Click on 'Signup / Login' button

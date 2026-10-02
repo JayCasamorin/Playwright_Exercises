@@ -9,7 +9,7 @@ class BasePage:
         self.products_link = page.get_by_role("link", name="Products")
         self.cart_link = page.get_by_role("link", name="Cart")
         self.signup_login_link = page.get_by_role("link", name="Signup / Login")
-        self.test_cases_link = page.get_by_role("link", name="Test Cases")
+        self.test_cases_link = page.get_by_role("link", name="Test Cases", exact=True)
         self.api_testing_link = page.get_by_role("link", name="API Testing")
         self.video_tutorials_link = page.get_by_role("link", name="Video Tutorials")
         self.contact_us_link = page.get_by_role("link", name="Contact Us")

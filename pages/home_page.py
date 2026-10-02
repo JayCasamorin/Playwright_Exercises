@@ -7,7 +7,11 @@ class HomePage(BasePage):
         super().__init__(page)
 
         # Locators (signup_login_link / contact_us_link inherited from BasePage)
-        self.home_header = page.get_by_alt_text("Website for automation practice")
+        self.home_heading = page.get_by_role(
+            "heading",
+            name="Full-Fledged practice website for Automation Engineers",
+            level=2,
+        )
         self.logged_in_as_user = page.get_by_role('listitem').filter(has_text=f"Logged in as")
         self.delete_account_link = page.get_by_role("link",name="Delete Account")
         self.logout_button = page.get_by_role("link", name="Logout")
