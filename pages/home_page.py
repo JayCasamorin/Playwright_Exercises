@@ -11,7 +11,7 @@ class HomePage(BasePage):
             "heading",
             name="Full-Fledged practice website for Automation Engineers",
             level=2,
-        )
+        ).filter(visible=True).first  # carousel slides repeat this heading
         self.logged_in_as_user = page.get_by_role('listitem').filter(has_text=f"Logged in as")
         self.delete_account_link = page.get_by_role("link",name="Delete Account")
         self.logout_button = page.get_by_role("link", name="Logout")
