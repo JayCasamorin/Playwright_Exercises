@@ -52,3 +52,27 @@ def test_verify_products(homepage: HomePage):
     expect(
         product_details.product_brand
     ).to_be_visible()
+
+def test_search_product(homepage: HomePage):
+    # Verify that home page is visible successfully
+    expect(
+        homepage.home_heading
+    ).to_be_visible()
+
+    # Click on 'Products' button
+    homepage.navigate_to_products()
+    products_page = ProductsPage(homepage.page)
+
+    # Verify user is navigated to ALL PRODUCTS page successfully
+    expect(
+        products_page.all_products_heading
+    ).to_be_visible()
+
+    # Search for a product
+    search_query = "top"
+    products_page.search_product(search_query)
+
+    # Verify that the searched product is visible in the results
+    expect(
+        products_page.searched_product(search_query)
+    ).not_to_have_count(0)
