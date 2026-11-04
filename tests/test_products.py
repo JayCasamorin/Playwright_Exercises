@@ -1,23 +1,12 @@
 from playwright.sync_api import expect
 from pages.home_page import HomePage
 from pages.products_page import ProductsPage
+from pages.cart_page import CartPage
 from pages.base_product_detail_page import BaseProductDetailPage
 import re
 
 def test_verify_products(homepage: HomePage):
-    # Verify that home page is visible successfully
-    expect(
-        homepage.home_heading
-    ).to_be_visible()
-
-    # Click on 'Products' button
-    homepage.navigate_to_products()
-    products_page = ProductsPage(homepage.page)
-
-    # Verify user is navigated to ALL PRODUCTS page successfully
-    expect(
-        products_page.all_products_heading
-    ).to_be_visible()
+    products_page = navigate_to_products_page(homepage)
 
     # The products list is visible
     expect(
@@ -53,7 +42,7 @@ def test_verify_products(homepage: HomePage):
         product_details.product_brand
     ).to_be_visible()
 
-def test_search_product(homepage: HomePage):
+def navigate_to_products_page(homepage):
     # Verify that home page is visible successfully
     expect(
         homepage.home_heading
@@ -67,6 +56,10 @@ def test_search_product(homepage: HomePage):
     expect(
         products_page.all_products_heading
     ).to_be_visible()
+    return products_page
+
+def test_search_product(homepage: HomePage):
+    products_page = navigate_to_products_page(homepage)
 
     # Search for a product
     search_query = "top"
@@ -76,3 +69,62 @@ def test_search_product(homepage: HomePage):
     expect(
         products_page.searched_product(search_query)
     ).not_to_have_count(0)
+
+def test_add_to_cart(homepage: HomePage):
+    # Verify that home page is visible successfully
+    expect(
+        homepage.home_heading
+    ).to_be_visible()
+
+    # Click 'Products' button
+    homepage.navigate_to_products()
+    products_page = ProductsPage(homepage.page)
+
+    # Verify user is navigated to ALL PRODUCTS page successfully
+    expect(
+        products_page.all_products_heading
+    ).to_be_visible()
+
+    # Hover over first product and click 'Add to cart'
+    products_page.add_product_to_cart(1)
+
+    # Click 'Continue Shopping' button
+    products_page.continue_shopping()
+
+    # Hover over second product and click 'Add to cart'
+    products_page.add_product_to_cart(2)
+
+    # Click 'View Cart' button
+    products_page.view_cart()
+    cart_page = CartPage(products_page.page)
+
+    # Verify both products are added to Cart
+    expect(
+        cart_page.first_product_in_cart
+    ).to_be_visible()
+    
+    expect(
+        cart_page.second_product_in_cart
+    ).to_be_visible()
+
+
+    # Verify their prices, quantity and total price
+    expect(
+        cart_page.first_product_price
+    ).to_be_visible()
+    expect(
+        cart_page.first_product_quantity
+    ).to_be_visible()
+    expect(
+        cart_page.first_product_total
+    ).to_be_visible()
+
+    expect(
+        cart_page.second_product_price
+    ).to_be_visible()
+    expect(
+        cart_page.second_product_quantity
+    ).to_be_visible()
+    expect(
+        cart_page.second_product_total
+    ).to_be_visible()
