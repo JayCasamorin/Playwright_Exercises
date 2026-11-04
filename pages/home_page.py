@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 from pages.base_page import BasePage
 
 URL = "https://automationexercise.com/"
@@ -15,7 +15,10 @@ class HomePage(BasePage):
         self.logged_in_as_user = page.get_by_role('listitem').filter(has_text=f"Logged in as")
         self.delete_account_link = page.get_by_role("link",name="Delete Account")
         self.logout_button = page.get_by_role("link", name="Logout")
-
+        self.subscription_heading = page.locator("#footer h2:has-text('Subscription')")
+        self.subscription_input = page.locator("#susbscribe_email")
+        self.subscription_button = page.locator("#subscribe")
+        self.subscribe_success_message = page.locator("#success-subscribe")
 
     def open(self):
         self.page.goto(URL)
@@ -34,3 +37,10 @@ class HomePage(BasePage):
         # Page JS (confirm-dialog submit handler) attaches after load; without this,
         # headless can submit before the handler is ready and the form does a plain reload.
         self.page.wait_for_load_state("networkidle")
+
+    def click_subscription_button(self):
+        self.subscription_button.click()
+
+    def subscribe(self, email: str):
+        self.subscription_input.fill(email)
+        self.click_subscription_button()
