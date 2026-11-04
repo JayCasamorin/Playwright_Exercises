@@ -13,6 +13,11 @@ class BasePage:
         self.api_testing_link = page.get_by_role("link", name="API Testing")
         self.video_tutorials_link = page.get_by_role("link", name="Video Tutorials")
         self.contact_us_link = page.get_by_role("link", name="Contact Us")
+        self.subscription_heading = page.locator("#footer h2:has-text('Subscription')")
+        self.subscription_input = page.locator("#susbscribe_email")
+        self.subscription_button = page.locator("#subscribe")
+        self.subscribe_success_message = page.locator("#success-subscribe")
+
 
     def navigate_to_home(self):
         self.home_link.click()
@@ -37,3 +42,10 @@ class BasePage:
 
     def navigate_to_contact_us(self):
         self.contact_us_link.click()
+
+    def click_subscription_button(self):
+            self.subscription_button.click()
+    
+    def subscribe(self, email: str):
+        self.subscription_input.fill(email)
+        self.click_subscription_button()
