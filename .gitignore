@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ignore local test assets, HTML dumps, and mock context files
+test_files/

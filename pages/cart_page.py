@@ -5,12 +5,22 @@ class CartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        self.first_product_in_cart = page.locator("#product-1")
-        self.first_product_price = page.locator("#product-1 .cart_price")
-        self.first_product_quantity = page.locator("#product-1 .cart_quantity")
-        self.first_product_total = page.locator("#product-1 .cart_total")
+    def _product_row(self, product_id: int):
+        # Create a locator for the product row with the given ID
+        return self.page.locator(f"#product-{product_id}")
 
-        self.second_product_in_cart = page.locator("#product-2")
-        self.second_product_price = page.locator("#product-2 .cart_price")
-        self.second_product_quantity = page.locator("#product-2 .cart_quantity")
-        self.second_product_total = page.locator("#product-2 .cart_total")
+    def product_in_cart(self, product_id: int):
+        # Return the locator for the product row in the cart
+        return self._product_row(product_id)
+
+    def product_price(self, product_id: int):
+        # Return the locator for the product price in the cart
+        return self._product_row(product_id).locator(".cart_price")
+
+    def product_quantity(self, product_id: int):
+        # Return the locator for the product quantity in the cart
+        return self._product_row(product_id).locator(".cart_quantity")
+
+    def product_total(self, product_id: int):
+        # Return the locator for the product total in the cart
+        return self._product_row(product_id).locator(".cart_total")

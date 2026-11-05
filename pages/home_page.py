@@ -1,8 +1,10 @@
 from playwright.sync_api import Page
-from pages.base_page import BasePage
+from pages.base_product_list_page import BaseProductListPage
 
 URL = "https://automationexercise.com/"
-class HomePage(BasePage):
+
+
+class HomePage(BaseProductListPage):
     def __init__(self, page: Page):
         super().__init__(page)
 
